@@ -1,3 +1,5 @@
+import { accountCreator } from "@/lib/validation/account";
+import { validateWithZodMessages } from "@/lib/validation/utils";
 import { DEFAULT_ICON_URLS } from "./AccountCreateForm.constants";
 import { AccountCreateFormData } from "./AccountCreateForm.types";
 
@@ -81,21 +83,10 @@ export function validateFormData(formData: AccountCreateFormData): {
   isValid: boolean;
   errors: string[];
 } {
-  const errors: string[] = [];
-
-  const accountNameValidation = validateAccountName(formData.accountName);
-  if (!accountNameValidation.isValid) {
-    errors.push(accountNameValidation.error!);
-  }
-
-  const iconUrlValidation = validateIconUrl(formData.icon);
-  if (!iconUrlValidation.isValid) {
-    errors.push(iconUrlValidation.error!);
-  }
-
+  const validation = validateWithZodMessages(accountCreator, formData);
   return {
-    isValid: errors.length === 0,
-    errors,
+    isValid: validation.isValid,
+    errors: validation.errors,
   };
 }
 

@@ -14,6 +14,12 @@ importers:
       '@ant-design/nextjs-registry':
         specifier: ^1.1.0
         version: 1.1.0(@ant-design/cssinjs@1.24.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(antd@5.27.4(luxon@3.7.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.18(@babel/core@7.28.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@conform-to/react':
+        specifier: ^1.15.0
+        version: 1.15.0(react@18.3.1)
+      '@conform-to/zod':
+        specifier: ^1.15.0
+        version: 1.15.0(zod@4.1.13)
       '@prisma/client':
         specifier: ^6.16.3
         version: 6.16.3(prisma@6.16.3(typescript@5.9.2))(typescript@5.9.2)
@@ -41,6 +47,9 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      zod:
+        specifier: ^4.1.13
+        version: 4.1.13
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
@@ -325,6 +334,19 @@ packages:
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
+
+  '@conform-to/dom@1.15.0':
+    resolution: {integrity: sha512-v7sUaObBAgEnWi1AyMJBtfr8FAJ7cjhF9/t0QD0BUhN8JCd7KbZdv/r8TEdvODjEMXpuk2gX2QHV9qniZZLVTw==}
+
+  '@conform-to/react@1.15.0':
+    resolution: {integrity: sha512-ZdUtpwXGwVpAn1hfsNIgxezzjBT0zJn4paaBEvVT9OYcrAlCvyXG1bKco2b2iZbCn7V93g+8IEXUFFLOdF5FmQ==}
+    peerDependencies:
+      react: '>=18'
+
+  '@conform-to/zod@1.15.0':
+    resolution: {integrity: sha512-+SKn73oycr9ITnqNgdazibmLVhYttd4xi7Ssc9auUcDS8whYsYh9dUBSa2IgRaeULtviBQqXNSl90CcDtqfpew==}
+    peerDependencies:
+      zod: ^3.21.0 || ^4.0.0
 
   '@csstools/color-helpers@5.1.0':
     resolution: {integrity: sha512-S11EXWJyy0Mz5SYvRmY8nJYTFFd1LCNV+7cXyAgQtOOuzb4EsgfqDufL+9esx72/eLhsRdGZwaldu/h+E4t4BA==}
@@ -3603,6 +3625,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
+  zod@4.1.13:
+    resolution: {integrity: sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig==}
+
 snapshots:
 
   '@adobe/css-tools@4.4.4': {}
@@ -3879,6 +3904,18 @@ snapshots:
       '@babel/helper-validator-identifier': 7.27.1
 
   '@bcoe/v8-coverage@0.2.3': {}
+
+  '@conform-to/dom@1.15.0': {}
+
+  '@conform-to/react@1.15.0(react@18.3.1)':
+    dependencies:
+      '@conform-to/dom': 1.15.0
+      react: 18.3.1
+
+  '@conform-to/zod@1.15.0(zod@4.1.13)':
+    dependencies:
+      '@conform-to/dom': 1.15.0
+      zod: 4.1.13
 
   '@csstools/color-helpers@5.1.0': {}
 
@@ -7781,3 +7818,5 @@ snapshots:
       yargs-parser: 21.1.1
 
   yocto-queue@0.1.0: {}
+
+  zod@4.1.13: {}

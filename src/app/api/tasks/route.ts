@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { CreateTaskRequest } from "@/types/task.types";
+import { taskCreator } from "@/lib/validation/task";
+import { validateWithZodMessages } from "@/lib/validation/utils";
 
 export async function GET(request: NextRequest) {
   try {
@@ -45,14 +46,16 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: CreateTaskRequest = await request.json();
-    const { title, description, accountId } = body;
+    const body = await request.json();
 
-    if (!title || !description || !accountId) {
+    // zodスキーマでバリデーション
+    const validation = validateWithZodMessages(taskCreator, body);
+    if (!validation.isValid) {
       return NextResponse.json(
         {
           success: false,
-          error: "title, description, accountIdが必要です",
+          error: validation.errors[0] || "バリデーションエラーが発生しました",
+          errors: validation.errors,
         },
         { status: 400 }
       );
@@ -60,9 +63,9 @@ export async function POST(request: NextRequest) {
 
     const task = await prisma.task.create({
       data: {
-        title,
-        description,
-        accountId,
+        title: validation.data!.title,
+        description: validation.data!.description || "",
+        accountId: validation.data!.accountId,
         status: "TODO",
       },
     });

@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { accountCreator } from "@/lib/validation/account";
+import { validateWithZodMessages } from "@/lib/validation/utils";
 
-export async function GET(request: NextRequest) {
+
+export async function GET(_request: NextRequest) {
   try {
     const accounts = await prisma.account.findMany({
       where: {
@@ -31,13 +34,15 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { accountName, icon } = body;
 
-    if (!accountName || !icon) {
+    // zodスキーマでバリデーション
+    const validation = validateWithZodMessages(accountCreator, body);
+    if (!validation.isValid) {
       return NextResponse.json(
         {
           success: false,
-          error: "アカウント名とアイコンは必須です",
+          error: validation.errors[0] || "バリデーションエラーが発生しました",
+          errors: validation.errors,
         },
         { status: 400 }
       );
@@ -45,8 +50,8 @@ export async function POST(request: NextRequest) {
 
     const account = await prisma.account.create({
       data: {
-        accountName,
-        icon,
+        accountName: validation.data!.accountName,
+        icon: validation.data!.icon,
       },
     });
 
